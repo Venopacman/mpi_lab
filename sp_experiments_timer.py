@@ -12,16 +12,16 @@ B_range = np.linspace(1.0, 10.0, 40)
 
 def main():
     fp_exp_results = pd.DataFrame(
-        columns=['Algorithm', 'Cores', 'N(b)', 'Integration_step', 'AVG_time'])
+        columns=['Algorithm', 'Cores', 'N(b)', 'Integration_step', 'time'])
     cpu = 8
     for exp, b in itertools.product(experiments_list, B_range):
         for i in range(40):
             start = timer()
             msg = os.system(
-                "mpiexec -q -n {1} python3 /home/psmirnov/repos/mpi_lab/{0} 0.0 {2} 1 0.0005 ".format(exp, cpu, b))
+                "mpiexec -q -n {1} python3 /home/psmirnov/repos/mpi_lab/{0} 0.0 {2} 1 0.000005 ".format(exp, cpu, b))
             fp_exp_results = fp_exp_results.append(
-                {'Algorithm': exp, 'Cores': cpu, 'time': timer() - start, 'N(b)': b, 'Integration_step': 0.001}, ignore_index=True)
-    fp_exp_results.to_csv('sp_experiment_cluster.csv', index=False)
+                {'Algorithm': exp, 'Cores': cpu, 'time': timer() - start, 'N(b)': b, 'Integration_step': 0.000005}, ignore_index=True)
+    fp_exp_results.to_csv('sp_experiment_cluster_v2.csv', index=False)
 
 
 if __name__ == '__main__':
